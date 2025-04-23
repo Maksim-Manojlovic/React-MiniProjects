@@ -1,5 +1,16 @@
-import "./App.css";
+import { accordionData } from "./utils/content";
+import Accordion from "./Accordions/accordion";
 
-function App() {}
+const App = () => {
+  return (
+    <div>
+      <div className="accordion">
+        {accordionData.map(({ title, content }) => (
+          <Accordion title={title} content={content} />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default App;
