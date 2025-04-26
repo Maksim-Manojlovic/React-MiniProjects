@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-
+import "./index.css";
 const API_URL = "/api/api/fe/wordle-words";
+const WORD_LENGTH = 5;
 
 const App = () => {
   const [solution, setSolution] = useState("");
+  const [guesses, setGuesses] = useState(Array(6).fill(null));
+
   useEffect(() => {
     const fetchWord = async () => {
       const response = await fetch(API_URL);
@@ -14,7 +17,28 @@ const App = () => {
     fetchWord();
   }, []);
 
-  return <div>{solution}</div>;
+  return (
+    <div className="board">
+      {guesses.map((guess) => {
+        return <Line guess={guess ?? ""} />;
+      })}
+    </div>
+  );
 };
+
+function Line({ guess }) {
+  const tiles = [];
+
+  for (let i = 0; i < WORD_LENGTH; i++) {
+    const char = guess[i];
+    tiles.push(
+      <div key={i} className="tile">
+        {char}{" "}
+      </div>
+    );
+  }
+
+  return <div className="line">{tiles}</div>;
+}
 
 export default App;
