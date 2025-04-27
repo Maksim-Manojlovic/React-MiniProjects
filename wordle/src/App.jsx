@@ -6,6 +6,17 @@ const WORD_LENGTH = 5;
 const App = () => {
   const [solution, setSolution] = useState("");
   const [guesses, setGuesses] = useState(Array(6).fill(null));
+  const [currentGuess, setCurrentGuess] = useState("");
+
+  useEffect(() => {
+    const handleType = (event) => {
+      setCurrentGuess(currentGuess + event.key);
+    };
+
+    window.addEventListener("keydown", handleType);
+
+    return () => window.removeEventListener("keydown", handleType);
+  }, [currentGuess]);
 
   useEffect(() => {
     const fetchWord = async () => {
@@ -22,6 +33,7 @@ const App = () => {
       {guesses.map((guess) => {
         return <Line guess={guess ?? ""} />;
       })}
+      {currentGuess}
     </div>
   );
 };
